@@ -1,0 +1,81 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body>
+
+    <!--adding score tracker and timer in the header-->
+    <header>
+        <h2 class="scores" id="scores">View Score</h2>
+        <h2 class="timer" id="countdown">60</h2>
+    </header>
+
+    <div id="intro">
+        <p> Welcome to the quiz! To get started, press the start quiz button</p>
+
+
+        <!--Start Button-->
+        <button id="startbtn">Start Quiz</button>
+    </div>
+
+
+    <!--creating a container for questions block-->
+    <div class="quiz-container hide" id="quiz">
+        <div class="quiz header">
+            <h2 id="title"></h2>
+            <ul>
+                <li>
+                    <input type="radio" name="choices" id="0">
+                    <label id="answer1"></label>
+                </li>
+                <li>
+                    <input type="radio" name="choices" id="1">
+                    <label id="answer2"></label>
+                </li>
+                <li>
+                    <input type="radio" name="choices" id="2">
+                    <label id="answer3"></label>
+                </li>
+                <li>
+                    <input type="radio" name="choices" id="3">
+                    <label id="answer4"></label>
+                </li>
+
+            </ul>
+            <!--creating sumbit button for every question-->
+            <button id="submitbtn">Submit</button>
+        </div>
+    </div>
+    <!--creating a from that will hold players info and score-->
+    <div class="card hide" id="results">
+        <h2>Enter score</h2>
+        <ul>
+            <li>
+                <label for="playerName">Player name</label><br>
+                <input type="playerName" id="playerName" placeholder="playerName">
+            </li>
+
+            <li>
+                <label for="email">Email</label><br>
+                <input type="email" id="email" placeholder="email">
+            </li>
+
+            <li>
+                <label for="Score">Score</label><br>
+                <input type="score" id="score" placeholder="score">
+            </li>
+        </ul>
+
+        <button id="savebtn">Save Results</button>
+    </div>
+
+
+    <script src="./assets/script.js"></script>
+
+</body>
