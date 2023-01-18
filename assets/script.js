@@ -16,7 +16,7 @@ const quiz = document.getElementById("quiz");
 const submitbtn = document.getElementById("submitbtn");
 let question = document.getElementById("title");
 let answers = document.getElementById("choices");
-const resultsForm=document.getElementById("results")
+const resultsForm = document.getElementById("results");
 
 // list of all questions, choices, and answers
 var questions = [
@@ -69,62 +69,61 @@ function startQuiz() {
   introEl.setAttribute("class", "hide"); // gives intro element a class of hide
   quiz.classList.remove("hide"); // removes hide class from quiz element
   scores.textContent = score; // setting the score on the scores element text content
-  let startClock=setInterval(clock, 1000) // variable of setInterval 
-  countdown.textContent = time; // setting the time on the countdown element text content
-  displayQuestion();// runs displayQuestion function
+  // variable of setInterval
+  let startClock = setInterval(() => {
+    time--;
+    countdown.textContent = time;
+    if (time <= 0) {
+      console.log(true);
+      clearInterval(startClock);
+      countdown.textContent = "Game Over";
+      endQuiz();
+    }
+    countdown.textContent = time; // setting the time on the countdown element text content
+    displayQuestion(); // runs displayQuestion functionk
+    startClock();
+  }, 1000);
 }
 
 startBtn.addEventListener("click", startQuiz);
 
-
-let savebtn=document.getElementById("savebtn")
+let savebtn = document.getElementById("savebtn");
 //if values are valid
 
-function submitResults(){
+function submitResults() {
+  let playerName = document.getElementById("playerName").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let finalScore = document.getElementById("score").value.trim();
 
-let playerName= document.getElementById("playerName").value.trim();
-let email=document.getElementById("email").value.trim();
-let finalScore= document.getElementById("score").value.trim();
+  if (!playerName || !email || !score) {
+    return;
+  }
+  // save them in local storage
+  let resultsObj = {
+    playerName,
+    email,
+    finalScore,
+  };
 
-if (!playerName || !email || !score){
-  return;
+  localStorage.setItem("resultsObj", JSON.stringify(resultsObj));
+  window.location.reload();
 }
-// save them in local storage
-let resultsObj= {
-  playerName,
-  email,
-  finalScore,
-}
 
-localStorage.setItem("resultsObj", JSON.stringify(resultsObj))
-window.location.reload()
-}
-
-savebtn.addEventListener("click",submitResults)
+savebtn.addEventListener("click", submitResults);
 
 function endQuiz() {
   quiz.setAttribute("class", "hide");
   introEl.classList.remove("hide");
   scores.textContent = score;
   introEl.textContent = `Game over, your score is: ${score}`;
-  resultsForm.classList.remove("hide")
-
+  resultsForm.classList.remove("hide");
 }
 
 //function to start the countdown
-function clock() {
-  time--;
-  countdown.textContent = time;
-  if (time <= 0) {
-    clearInterval(startClock)
-    countdown.textContent="Game Over"
-    endQuiz();
-  }
-}
 
 submitbtn.addEventListener("click", () => {
   for (const button of radioButtons) {
-    if (button.checked === true) { 
+    if (button.checked === true) {
       // if the radio button is checked
       selectedAnswer = button.id; // assign selectedAnswer to radio button's id
       if (
@@ -132,14 +131,14 @@ submitbtn.addEventListener("click", () => {
       ) {
         // this happens when the question is right
         soundCrt.play(); // plays correct answer sound
-        index++;// increases index
-        if (index<5){
-           // displays next question if index is less than 5
+        index++; // increases index
+        if (index < 5) {
+          // displays next question if index is less than 5
           // because there are only 5 questions, max index is 4
-        displayQuestion();
-    }
+          displayQuestion();
+        }
         button.checked = false; //unchecking the button by setting the button to false
-        score++; // increase the score by 1
+        score += 10; // increase the score by 1
         scores.textContent = score; // getting h2 element with id of scores and changing text content to score
         if (index >= 5) {
           // if index is greater than or equal to 5 it will run
@@ -148,23 +147,21 @@ submitbtn.addEventListener("click", () => {
       } else {
         // this happens when the question is wrong
         soundIncrt.play(); // plays incrrect answer sound
-        time--; // subtract 1 from time
-        index++;// increases index
-        if (index<5){
+        time -= 15; // subtract 15 sec from time
+        index++; // increases index
+        if (index < 5) {
           // displays next question if index is less than 5
-         // because there are only 5 questions, max index is 4
-       displayQuestion();
-   }
-   button.checked = false; //unchecking the button by setting the button to false
-   if (index >= 5) {
-    // if index is greater than or equal to 5 it will run
-    endQuiz(); // a function to end the en the quiz
-  }
+          // because there are only 5 questions, max index is 4
+          displayQuestion();
+        }
+        button.checked = false; //unchecking the button by setting the button to false
+        if (index >= 5) {
+          // if index is greater than or equal to 5 it will run
+          endQuiz(); // a function to end the en the quiz
+        }
       }
       return;
     }
-
   }
 });
 // get values from the form input
-
